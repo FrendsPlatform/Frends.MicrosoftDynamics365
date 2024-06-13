@@ -12,7 +12,25 @@ public class Result
     /// <summary>
     /// Contains the input repeated the specified number of times.
     /// </summary>
-    /// <example>Example of the output</example>
+    /// <example>
+    /// {
+    ///     "@odata.context": "https://[domain].dynamics.com/api/data/v9.1/$metadata#accounts",
+    ///     "value": [
+    ///     {
+    ///         "@odata.etag": "W/\"5089461\"",
+    ///         "address1_composite": "6789 Edwards Ave.\r\nLynnwood, Tennessee 37010\r\nUnited States",
+    ///         "websiteurl": "http://www.example.com",
+    ///         "name": "Fabrikam, Inc."
+    ///     },
+    ///     {
+    ///         "@odata.etag": "W/\"5089463\"",
+    ///         "address1_composite": "789 3rd St\r\nSan Francisco, California 94158\r\nUnited States",
+    ///         "websiteurl": "http://www.example.com",
+    ///         "name": "Trey Research"
+    ///     }
+    ///     ]
+    /// }
+    /// </example>
     public dynamic Data { get; init; }
 
     /// <summary>

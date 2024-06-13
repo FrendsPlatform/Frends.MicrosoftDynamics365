@@ -1,8 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Frends.MicrosoftDynamics365.Request.Definitions;
+﻿namespace Frends.MicrosoftDynamics365.Request.Definitions;
 
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 /// <summary>
 /// Input class contains parameters that are required.

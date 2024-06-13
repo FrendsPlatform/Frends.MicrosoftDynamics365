@@ -1,6 +1,4 @@
-﻿using System.IO.Enumeration;
-
-namespace Frends.MicrosoftDynamics365.Request;
+﻿namespace Frends.MicrosoftDynamics365.Request;
 
 using System;
 using System.Net.Http;
@@ -18,11 +16,11 @@ using Definitions;
 public static class MicrosoftDynamics365
 {
     /// <summary>
-    /// This is Task.
+    /// Task for making requests to Microsoft Dynamics 365.
     /// [Documentation](https://tasks.frends.com/tasks/frends-tasks/Frends.MicrosoftDynamics365.Request).
     /// </summary>
-    /// <param name="input">What to repeat.</param>
-    /// <param name="options">Define if repeated multiple times. </param>
+    /// <param name="input">Task input.</param>
+    /// <param name="options">Task options.</param>
     /// <param name="cancellationToken">Cancellation token given by Frends.</param>
     /// <returns>Object { dynamic Data, bool Success, string ErrorMessage }.</returns>
     public static async Task<Result> Request([PropertyTab] Input input, [PropertyTab] Options options, CancellationToken cancellationToken)
