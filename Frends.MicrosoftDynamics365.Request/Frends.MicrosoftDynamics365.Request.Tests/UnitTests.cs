@@ -1,7 +1,6 @@
-using System;
-
 namespace Frends.MicrosoftDynamics365.Request.Tests;
 
+using System;
 using Definitions;
 using NUnit.Framework;
 using System.Threading;
