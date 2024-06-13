@@ -68,25 +68,22 @@ internal class UnitTests : TestsBase
         Assert.That(exception.Message, Does.Contain("Error retrieving bad_request. Status code: NotFound"));
     }
 
-    private Input GetInput(string path, Method method = Method.GET, string payload = null)
-    {
-        return new Input
+    private Input GetInput(string path, Method method = Method.GET, string payload = null) =>
+        new()
         {
             Path = path,
+            Payload = payload,
             ClientId = ClientId,
             TenantId = TenantId,
             ClientSecret = ClientSecret,
             Dynamics365Url = Dynamics365Url,
             Method = method,
         };
-    }
 
-    private Options GetOptions(bool throwExceptionOnErrorResponse = false)
-    {
-        return new Options
+    private Options GetOptions(bool throwExceptionOnErrorResponse = false) =>
+        new()
         {
             ApiVersion = "v9.1",
             ThrowExceptionOnErrorResponse = throwExceptionOnErrorResponse,
         };
-    }
 }
