@@ -87,7 +87,11 @@ public static class MicrosoftDynamics365
         var response = await httpClient.SendAsync(request, cancellationToken);
 
         if (!response.IsSuccessStatusCode)
-            throw new Exception($"Error retrieving {input.Path}. Status code: " + response.StatusCode);
+        {
+            throw new Exception(
+                $"Error retrieving {input.Path}. Status code: {response.StatusCode}. " +
+                $"Response content: {await response.Content.ReadAsStringAsync(cancellationToken)}");
+        }
 
         var jsonResponse = await response.Content.ReadAsStringAsync(cancellationToken);
         var contacts = JToken.Parse(jsonResponse);
