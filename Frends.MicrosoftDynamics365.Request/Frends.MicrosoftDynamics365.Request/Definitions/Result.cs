@@ -38,11 +38,11 @@ public class Result
     /// not throw an exception, this will be false.
     /// </summary>
     /// <example>true</example>
-    public bool Success { get; set; }
+    public bool Success { get; init; }
 
     /// <summary>
     /// Error message if the call to Dynamics 365 failed and the task is configured to not throw an exception.
     /// </summary>
     /// <example>Something went wrong.</example>
-    public string ErrorMessage { get; set; }
+    public string ErrorMessage { get; init; }
 }
