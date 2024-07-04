@@ -45,7 +45,7 @@ internal class UnitTests : TestsBase
 
         Assert.That(result.Success, Is.True);
         Assert.That(result.ErrorMessage, Is.Null);
-        Assert.AreEqual(result.Data.description.ToString(), "Updated description");
+        Assert.AreEqual(result.Data.description.ToString(), "Updated description.");
     }
 
     [Test]
