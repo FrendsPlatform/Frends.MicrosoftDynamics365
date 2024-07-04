@@ -23,6 +23,32 @@ internal class UnitTests : TestsBase
     }
 
     [Test]
+    public async Task PatchAccount_UpdatesAccount()
+    {
+        // Get accounts and save the ID of the first one
+        var input = GetInput("accounts");
+        var options = GetOptions();
+
+        var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
+        var accountid = result.Data.value[0].accountid;
+
+        // Update the description of the first returned account with a PATCH
+        input = GetInput($"accounts({accountid})", Method.PATCH, "{\r\n\"description\": \"Updated description.\"\r\n}");
+        result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.That(result.ErrorMessage, Is.Null);
+
+        // Get account description and assert that it has been updated
+        input = GetInput($"accounts({accountid})?$select=description");
+        result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
+
+        Assert.That(result.Success, Is.True);
+        Assert.That(result.ErrorMessage, Is.Null);
+        Assert.AreEqual(result.Data.description.ToString(), "Updated description");
+    }
+
+    [Test]
     public async Task BadAuthentication_ReturnsError()
     {
         var input = new Input { ClientId = "bad", ClientSecret = "bad", };
