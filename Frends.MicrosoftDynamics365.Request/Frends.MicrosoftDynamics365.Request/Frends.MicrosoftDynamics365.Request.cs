@@ -94,7 +94,7 @@ public static class MicrosoftDynamics365
         }
 
         var jsonResponse = await response.Content.ReadAsStringAsync(cancellationToken);
-        var contacts = JToken.Parse(jsonResponse);
+        var contacts = !string.IsNullOrWhiteSpace(jsonResponse) ? JToken.Parse(jsonResponse) : JToken.Parse("{\r\n\"message\": \"Success\"\r\n}");
         return contacts;
     }
 }
