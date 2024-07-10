@@ -79,7 +79,7 @@ public static class MicrosoftDynamics365
             RequestUri = new Uri($"{input.Dynamics365Url}/api/data/{options.ApiVersion}/{input.Path}"),
         };
 
-        if (input.Method == Method.POST || input.Method == Method.PUT)
+        if (input.Method == Method.POST || input.Method == Method.PUT || input.Method == Method.PATCH)
         {
             request.Content = new StringContent(input.Payload ?? string.Empty, System.Text.Encoding.UTF8, "application/json");
         }
@@ -94,7 +94,7 @@ public static class MicrosoftDynamics365
         }
 
         var jsonResponse = await response.Content.ReadAsStringAsync(cancellationToken);
-        var contacts = JToken.Parse(jsonResponse);
-        return contacts;
+        var parsedResponse = !string.IsNullOrWhiteSpace(jsonResponse) ? JToken.Parse(jsonResponse) : null;
+        return parsedResponse;
     }
 }
