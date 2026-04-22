@@ -28,6 +28,13 @@ public class Input
     public string ClientSecret { get; init; }
 
     /// <summary>
+    /// Dynamics 365 environment type. Dataverse/CRM uses /api/data/{version}/{path}. Finance and Operations uses /data/{path}.
+    /// </summary>
+    /// <example>Dataverse</example>
+    [DefaultValue(EnvironmentType.Dataverse)]
+    public EnvironmentType EnvironmentType { get; init; }
+
+    /// <summary>
     /// Dynamics 365 URL.
     /// </summary>
     /// <example>https://my-org.crm4.dynamics.com</example>
@@ -35,7 +42,7 @@ public class Input
     public string Dynamics365Url { get; init; }
 
     /// <summary>
-    /// Dynamics 365 URL.
+    /// HTTP method for the request.
     /// </summary>
     /// <example>GET</example>
     [DefaultValue(Method.GET)]

@@ -11,5 +11,21 @@ public enum Method
     PUT,
     DELETE,
 }
+
+/// <summary>
+/// Dynamics 365 environment type.
+/// </summary>
+public enum EnvironmentType
+{
+    /// <summary>
+    /// Dataverse / CRM (uses /api/data/{version}/{path}).
+    /// </summary>
+    Dataverse,
+
+    /// <summary>
+    /// Finance and Operations (uses /data/{path}).
+    /// </summary>
+    FinanceAndOperations,
+}
 #pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 #pragma warning restore SA1602 // Enumeration items should be documented
