@@ -94,7 +94,7 @@ internal class UnitTests : TestsBase
         Assert.That(exception.Message, Does.Contain("Error retrieving bad_request. Status code: NotFound"));
     }
 
-    private Input GetInput(string path, Method method = Method.GET, string payload = null) =>
+    private Input GetInput(string path, Method method = Method.GET, string payload = null, EnvironmentType environmentType = EnvironmentType.Dataverse) =>
         new()
         {
             Path = path,
@@ -104,6 +104,7 @@ internal class UnitTests : TestsBase
             ClientSecret = ClientSecret,
             Dynamics365Url = Dynamics365Url,
             Method = method,
+            EnvironmentType = environmentType,
         };
 
     private Options GetOptions(bool throwExceptionOnErrorResponse = false) =>

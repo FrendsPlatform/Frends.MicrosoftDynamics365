@@ -73,10 +73,15 @@ public static class MicrosoftDynamics365
         using var httpClient = new HttpClient();
         httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
+        var baseUrl = input.Dynamics365Url.TrimEnd('/');
+        var requestUrl = input.EnvironmentType == EnvironmentType.FinanceAndOperations
+            ? $"{baseUrl}/data/{input.Path}"
+            : $"{baseUrl}/api/data/{options.ApiVersion}/{input.Path}";
+
         var request = new HttpRequestMessage
         {
             Method = new HttpMethod(input.Method.ToString()),
-            RequestUri = new Uri($"{input.Dynamics365Url}/api/data/{options.ApiVersion}/{input.Path}"),
+            RequestUri = new Uri(requestUrl),
         };
 
         if (input.Method == Method.POST || input.Method == Method.PUT || input.Method == Method.PATCH)
