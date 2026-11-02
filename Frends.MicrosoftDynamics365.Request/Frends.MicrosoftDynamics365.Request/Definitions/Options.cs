@@ -38,5 +38,4 @@ public class Options
         get => ThrowErrorOnFailure;
         init => ThrowErrorOnFailure = value;
     }
-
 }
