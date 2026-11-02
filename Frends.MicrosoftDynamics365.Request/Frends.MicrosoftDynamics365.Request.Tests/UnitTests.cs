@@ -1,14 +1,18 @@
 namespace Frends.MicrosoftDynamics365.Request.Tests;
 
 using System;
-using Definitions;
-using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using Frends.MicrosoftDynamics365.Request.Definitions;
+using NUnit.Framework;
 
 [TestFixture]
-internal class UnitTests : TestsBase
+internal class UnitTests : TestBase
 {
+    /// <summary>
+    /// Verifies that an account request returns account data.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task GetAccounts_ReturnsAccounts()
     {
@@ -22,6 +26,10 @@ internal class UnitTests : TestsBase
         Assert.That(result.Data.value.Count, Is.GreaterThan(0));
     }
 
+    /// <summary>
+    /// Verifies that a PATCH request updates an account.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task PatchAccount_UpdatesAccount()
     {
@@ -48,6 +56,10 @@ internal class UnitTests : TestsBase
         Assert.AreEqual(result.Data.description.ToString(), "Updated description.");
     }
 
+    /// <summary>
+    /// Verifies that authentication failures are returned when throwing is disabled.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task BadAuthentication_ReturnsError()
     {
@@ -61,6 +73,9 @@ internal class UnitTests : TestsBase
         Assert.That(result.Data, Is.Null);
     }
 
+    /// <summary>
+    /// Verifies that authentication failures are thrown when configured.
+    /// </summary>
     [Test]
     public void BadAuthentication_ThrowsException()
     {
@@ -72,6 +87,10 @@ internal class UnitTests : TestsBase
         Assert.That(exception.Message, Does.Contain("Error acquiring access token."));
     }
 
+    /// <summary>
+    /// Verifies that failed requests return an error result.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task BadRequest_ReturnsError()
     {
@@ -83,6 +102,9 @@ internal class UnitTests : TestsBase
         Assert.That(result.Data, Is.Null);
     }
 
+    /// <summary>
+    /// Verifies that failed requests throw when configured.
+    /// </summary>
     [Test]
     public void BadRequest_ThrowsException()
     {
