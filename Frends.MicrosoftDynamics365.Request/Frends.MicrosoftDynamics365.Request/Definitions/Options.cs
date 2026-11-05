@@ -28,14 +28,4 @@ public class Options
     [DefaultValue("")]
     public string ErrorMessageOnFailure { get; init; } = string.Empty;
 
-    /// <summary>
-    /// Backward-compatible alias for ThrowErrorOnFailure.
-    /// </summary>
-    /// <example>true</example>
-    [DefaultValue(true)]
-    public bool ThrowExceptionOnErrorResponse
-    {
-        get => ThrowErrorOnFailure;
-        init => ThrowErrorOnFailure = value;
-    }
 }

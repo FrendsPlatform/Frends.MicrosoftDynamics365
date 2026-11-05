@@ -63,7 +63,11 @@ internal class UnitTests : TestBase
     [Test]
     public async Task BadAuthentication_ReturnsError()
     {
-        var input = new Input { ClientId = "bad", ClientSecret = "bad", };
+        var input = new Input
+        {
+            ClientId = "bad",
+            ClientSecret = "bad",
+        };
         var options = GetOptions();
 
         var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
@@ -79,7 +83,12 @@ internal class UnitTests : TestBase
     [Test]
     public void BadAuthentication_ThrowsException()
     {
-        var input = new Input { ClientId = "bad", ClientSecret = "bad", TenantId = TenantId };
+        var input = new Input
+        {
+            ClientId = "bad",
+            ClientSecret = "bad",
+            TenantId = TenantId
+        };
         var options = GetOptions(true);
 
         var exception = Assert.ThrowsAsync<Exception>(async () =>
@@ -98,7 +107,8 @@ internal class UnitTests : TestBase
         var options = GetOptions(false);
         var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
         Assert.That(result.Success, Is.False);
-        Assert.That(result.ErrorMessage, Does.Contain("Error calling Dynamics 365 API: Error retrieving bad_request. Status code: NotFound"));
+        Assert.That(result.ErrorMessage,
+            Does.Contain("Error calling Dynamics 365 API: Error retrieving bad_request. Status code: NotFound"));
         Assert.That(result.Data, Is.Null);
     }
 
@@ -116,7 +126,7 @@ internal class UnitTests : TestBase
         Assert.That(exception.Message, Does.Contain("Error retrieving bad_request. Status code: NotFound"));
     }
 
-    private Input GetInput(string path, Method method = Method.GET, string payload = null) =>
+    private static Input GetInput(string path, Method method = Method.GET, string payload = null) =>
         new()
         {
             Path = path,
@@ -128,10 +138,10 @@ internal class UnitTests : TestBase
             Method = method,
         };
 
-    private Options GetOptions(bool throwExceptionOnErrorResponse = false) =>
+    private static Options GetOptions(bool throwException = false) =>
         new()
         {
             ApiVersion = "v9.1",
-            ThrowExceptionOnErrorResponse = throwExceptionOnErrorResponse,
+            ThrowErrorOnFailure = throwException,
         };
 }

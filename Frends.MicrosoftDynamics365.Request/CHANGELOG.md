@@ -2,8 +2,9 @@
 
 ## [2.0.0] - 2026-11-02
 ### Changed
-- **[Breaking Change]** Requests now throw on failure by default; set `ThrowErrorOnFailure` to `false` to return a result with error details.
-- Added structured error details and configurable failure messages for Dynamics 365 requests.
+- **[Breaking Change]** On the Options tab, `ThrowExceptionOnErrorResponse` was replaced by `ThrowErrorOnFailure`, which defaults to `true`. Set it to `false` to return a result instead of throwing when a request fails.
+- The result now includes an `Error` object with `Message` and `AdditionalInfo` properties; `ErrorMessageOnFailure` on the Options tab lets you override the failure message.
+- The task now targets .NET 8 (previously .NET 6).
 
 ## [1.1.0] - 2024-07-08
 ### Changed
