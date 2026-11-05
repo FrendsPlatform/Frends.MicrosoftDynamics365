@@ -43,6 +43,12 @@ public class Result
     /// <summary>
     /// Error message if the call to Dynamics 365 failed and the task is configured to not throw an exception.
     /// </summary>
-    /// <example>Something went wrong.</example>
+    /// <example>Error calling Dynamics 365 API: Resource not found.</example>
     public string ErrorMessage { get; init; }
+
+    /// <summary>
+    /// Error details when the call to Dynamics 365 failed.
+    /// </summary>
+    /// <example>object { string Message, Exception AdditionalInfo }</example>
+    public Error Error { get; init; }
 }
