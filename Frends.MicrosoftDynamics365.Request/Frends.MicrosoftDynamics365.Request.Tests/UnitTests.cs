@@ -87,7 +87,7 @@ internal class UnitTests : TestBase
         {
             ClientId = "bad",
             ClientSecret = "bad",
-            TenantId = TenantId
+            TenantId = TenantId,
         };
         var options = GetOptions(true);
 
@@ -107,7 +107,8 @@ internal class UnitTests : TestBase
         var options = GetOptions(false);
         var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
         Assert.That(result.Success, Is.False);
-        Assert.That(result.ErrorMessage,
+        Assert.That(
+            result.ErrorMessage,
             Does.Contain("Error calling Dynamics 365 API: Error retrieving bad_request. Status code: NotFound"));
         Assert.That(result.Data, Is.Null);
     }

@@ -27,5 +27,4 @@ public class Options
     /// <example>Dynamics 365 request failed</example>
     [DefaultValue("")]
     public string ErrorMessageOnFailure { get; init; } = string.Empty;
-
 }
