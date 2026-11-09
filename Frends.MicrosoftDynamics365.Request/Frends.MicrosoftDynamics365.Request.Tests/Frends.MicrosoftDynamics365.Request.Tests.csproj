@@ -1,8 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
 
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -26,13 +27,18 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.6.1" />
-	<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+	<PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.556">
 		<PrivateAssets>all</PrivateAssets>
 		<IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="FrendsTaskAnalyzers" Version="1.11.0">
+		<PrivateAssets>all</PrivateAssets>
+		<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\Frends.MicrosoftDynamics365.Request\FrendsTaskMetadata.json" />
     <ProjectReference Include="..\Frends.MicrosoftDynamics365.Request\Frends.MicrosoftDynamics365.Request.csproj" />
   </ItemGroup>
 

@@ -15,9 +15,16 @@ public class Options
     public string ApiVersion { get; init; }
 
     /// <summary>
-    /// Throw exception on error response.
+    /// Whether to throw an exception when the request fails.
     /// </summary>
-    /// <example>false</example>
-    [DefaultValue(false)]
-    public bool ThrowExceptionOnErrorResponse { get; init; }
+    /// <example>true</example>
+    [DefaultValue(true)]
+    public bool ThrowErrorOnFailure { get; init; } = true;
+
+    /// <summary>
+    /// Overrides the error message when the request fails.
+    /// </summary>
+    /// <example>Dynamics 365 request failed</example>
+    [DefaultValue("")]
+    public string ErrorMessageOnFailure { get; init; } = string.Empty;
 }

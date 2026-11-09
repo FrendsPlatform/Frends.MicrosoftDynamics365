@@ -1,14 +1,18 @@
 namespace Frends.MicrosoftDynamics365.Request.Tests;
 
 using System;
-using Definitions;
-using NUnit.Framework;
 using System.Threading;
 using System.Threading.Tasks;
+using Frends.MicrosoftDynamics365.Request.Definitions;
+using NUnit.Framework;
 
 [TestFixture]
-internal class UnitTests : TestsBase
+internal class UnitTests : TestBase
 {
+    /// <summary>
+    /// Verifies that an account request returns account data.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task GetAccounts_ReturnsAccounts()
     {
@@ -22,6 +26,10 @@ internal class UnitTests : TestsBase
         Assert.That(result.Data.value.Count, Is.GreaterThan(0));
     }
 
+    /// <summary>
+    /// Verifies that a PATCH request updates an account.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task PatchAccount_UpdatesAccount()
     {
@@ -48,10 +56,18 @@ internal class UnitTests : TestsBase
         Assert.AreEqual(result.Data.description.ToString(), "Updated description.");
     }
 
+    /// <summary>
+    /// Verifies that authentication failures are returned when throwing is disabled.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task BadAuthentication_ReturnsError()
     {
-        var input = new Input { ClientId = "bad", ClientSecret = "bad", };
+        var input = new Input
+        {
+            ClientId = "bad",
+            ClientSecret = "bad",
+        };
         var options = GetOptions();
 
         var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
@@ -61,10 +77,18 @@ internal class UnitTests : TestsBase
         Assert.That(result.Data, Is.Null);
     }
 
+    /// <summary>
+    /// Verifies that authentication failures are thrown when configured.
+    /// </summary>
     [Test]
     public void BadAuthentication_ThrowsException()
     {
-        var input = new Input { ClientId = "bad", ClientSecret = "bad", TenantId = TenantId };
+        var input = new Input
+        {
+            ClientId = "bad",
+            ClientSecret = "bad",
+            TenantId = TenantId,
+        };
         var options = GetOptions(true);
 
         var exception = Assert.ThrowsAsync<Exception>(async () =>
@@ -72,6 +96,10 @@ internal class UnitTests : TestsBase
         Assert.That(exception.Message, Does.Contain("Error acquiring access token."));
     }
 
+    /// <summary>
+    /// Verifies that failed requests return an error result.
+    /// </summary>
+    /// <returns>A task representing the asynchronous test.</returns>
     [Test]
     public async Task BadRequest_ReturnsError()
     {
@@ -79,10 +107,15 @@ internal class UnitTests : TestsBase
         var options = GetOptions(false);
         var result = await MicrosoftDynamics365.Request(input, options, CancellationToken.None);
         Assert.That(result.Success, Is.False);
-        Assert.That(result.ErrorMessage, Does.Contain("Error calling Dynamics 365 API: Error retrieving bad_request. Status code: NotFound"));
+        Assert.That(
+            result.ErrorMessage,
+            Does.Contain("Error calling Dynamics 365 API: Error retrieving bad_request. Status code: NotFound"));
         Assert.That(result.Data, Is.Null);
     }
 
+    /// <summary>
+    /// Verifies that failed requests throw when configured.
+    /// </summary>
     [Test]
     public void BadRequest_ThrowsException()
     {
@@ -94,7 +127,7 @@ internal class UnitTests : TestsBase
         Assert.That(exception.Message, Does.Contain("Error retrieving bad_request. Status code: NotFound"));
     }
 
-    private Input GetInput(string path, Method method = Method.GET, string payload = null) =>
+    private static Input GetInput(string path, Method method = Method.GET, string payload = null) =>
         new()
         {
             Path = path,
@@ -106,10 +139,10 @@ internal class UnitTests : TestsBase
             Method = method,
         };
 
-    private Options GetOptions(bool throwExceptionOnErrorResponse = false) =>
+    private static Options GetOptions(bool throwException = false) =>
         new()
         {
             ApiVersion = "v9.1",
-            ThrowExceptionOnErrorResponse = throwExceptionOnErrorResponse,
+            ThrowErrorOnFailure = throwException,
         };
 }

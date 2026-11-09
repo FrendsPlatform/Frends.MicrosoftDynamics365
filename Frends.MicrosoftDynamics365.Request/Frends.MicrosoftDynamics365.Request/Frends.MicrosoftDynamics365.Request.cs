@@ -1,14 +1,15 @@
 ﻿namespace Frends.MicrosoftDynamics365.Request;
 
 using System;
+using System.ComponentModel;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Threading;
 using System.Threading.Tasks;
+using Frends.MicrosoftDynamics365.Request.Definitions;
+using Frends.MicrosoftDynamics365.Request.Helpers;
 using Microsoft.Identity.Client;
 using Newtonsoft.Json.Linq;
-using System.ComponentModel;
-using System.Threading;
-using Definitions;
 
 /// <summary>
 /// Main class of the Task.
@@ -22,29 +23,18 @@ public static class MicrosoftDynamics365
     /// <param name="input">Task input.</param>
     /// <param name="options">Task options.</param>
     /// <param name="cancellationToken">Cancellation token given by Frends.</param>
-    /// <returns>Object { dynamic Data, bool Success, string ErrorMessage }.</returns>
+    /// <returns>object { dynamic Data, bool Success, string ErrorMessage, object Error { string Message, Exception AdditionalInfo } }</returns>
     public static async Task<Result> Request([PropertyTab] Input input, [PropertyTab] Options options, CancellationToken cancellationToken)
     {
         try
         {
             var token = await GetAccessTokenAsync(input, cancellationToken);
             var data = await ExecuteRequestAsync(input, options, token, cancellationToken);
-            return new Result { Data = data, Success = true };
+            return new Result { Data = data, Error = null, Success = true };
         }
         catch (Exception ex)
         {
-            if (options.ThrowExceptionOnErrorResponse) throw;
-
-            var errorMessage = "Error calling Dynamics 365 API: " + ex.Message;
-            if (ex.InnerException != null)
-                errorMessage += "\r\nInner exception: " + ex.InnerException.Message;
-
-            return new Result
-            {
-                Data = null,
-                ErrorMessage = errorMessage,
-                Success = false,
-            };
+            return ex.Handle(options);
         }
     }
 
@@ -64,7 +54,7 @@ public static class MicrosoftDynamics365
         }
         catch (MsalServiceException ex)
         {
-            throw new Exception($"Error acquiring access token.", ex);
+            throw new Exception("Error acquiring access token.", ex);
         }
     }
 
